@@ -55,3 +55,21 @@ export const addFriends = async (req, res) => {
     }
   };
   
+
+  export const viewProfile = async(req,res)=>{
+
+    try {
+
+      const friendId = req.params.friendId;
+      const user = await User.findById(friendId).select('-password');
+      if(!user){
+        return res.status(StatusCodes.NOT_FOUND).json({msg:"User not found"});
+      }
+      else{
+        return res.status(StatusCodes.OK).json({user});
+      }
+      
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:"Internal Server error"})
+    }
+  }

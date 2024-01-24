@@ -50,7 +50,25 @@ export const addMemberToGroup = async(req,res)=>{
        res.status(StatusCodes.OK).json({msg:'Group joined',updatedGroup})
 
     }catch(error){
-        console.log(error);
+        //console.log(error);
+        res.status(StatusCodes.BAD_REQUEST).send(error)
+    }
+}
+
+export const exitGroup = async(req,res)=>{
+    try {
+        const {userId} = req.body;
+        const groupId = req.params.id;
+        const updatedGroup = await Groups.findByIdAndUpdate(groupId,
+            {$pull: {members: userId}},
+            {new: true}
+        );
+        if (!updatedGroup) {
+            return res.status(StatusCodes.NOT_FOUND).json({ msg: 'Group not found' });
+          }
+      
+        res.status(StatusCodes.OK).json({msg:'Group exited',updatedGroup});
+    } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).send(error)
     }
 }

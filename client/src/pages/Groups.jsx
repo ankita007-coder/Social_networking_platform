@@ -16,6 +16,7 @@ const Groups = () => {
   const [overlay,setOverlay] = useState(false);
   const [groupJoin,setGroupJoin] = useState([]);
   const {userDetails} = useAuth();
+
   const fetchData= async()=>{
     
     try {
@@ -56,6 +57,23 @@ const Groups = () => {
         });
       }
     }
+    const handleExit = async (groupId) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/api/v1/groups/exit/${groupId}`, {
+          userId: userDetails._id,
+        });
+  
+        if (response.status===200) {
+          toast.success(response.data.msg);
+          fetchData(); // Refresh the group list after exiting
+
+        }
+      } catch (error) {
+        console.error('Error exiting group:', error);
+        toast.error('Error exiting group');
+      }
+    };
+  
 
   useEffect(() => {
     fetchData();
@@ -85,11 +103,13 @@ const Groups = () => {
                 onClick={()=>handleJoin(d._id,index)}
                  disabled={d.isMember||groupJoin[index]}>
               {d.isMember||groupJoin[index] ? (
-                <>
-                  <p>Joined</p>
-                </>): 'Join Group'}
+                
+                 'Joined'
+               ): 'Join Group'}
             </button>
-            {d.isMember && <FaArrowRightFromBracket/>}
+           {d.isMember && <button className='join'
+                                  style={{margin:'0px 50px'}}
+                                  onClick={()=>handleExit(d._id)}>Exit Group <FaArrowRightFromBracket/></button>}
             </div>
             </div>
           )

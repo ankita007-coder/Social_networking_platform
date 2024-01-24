@@ -156,7 +156,7 @@ return (
                                <div>
                                    {post && post.comments ?(post.comments.map(c=>{
                                     
-                                    return <div className='comment'>
+                                    return <div className='comment' key={c._id}>
                                         <img src={`http://localhost:8000/${c.author.profilePic}`}/>
                                         <p>{c.content}</p>
                                     </div>

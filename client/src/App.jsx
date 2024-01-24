@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import {
   Friends,
@@ -19,20 +19,26 @@ const App = () => {
     return isLoggedIn ? element : <Navigate to="/" />;
   };
   
+  // useEffect(()=>{
+  //   const token = localStorage.getItem('token');
+  //   if(token){
+  //     <Navigate to="/home"/>
+  //   }
+  // },[token]);
   return (
    
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+          <Route path="/home" element={<PrivateRoute  element={<Home />} />} />
           <Route
             path="/members"
             element={<PrivateRoute element={<Friends />} />}
           />
           <Route
             path="/groups"
-            element={<PrivateRoute element={<Groups />} />}
+            element={<PrivateRoute  element={<Groups />} />}
           />
           <Route
             path="/profile"

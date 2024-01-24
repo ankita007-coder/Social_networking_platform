@@ -48,6 +48,10 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   console.log('A user connected');
 
+  //wcwjehk
+  socket.on('newMessage',(data)=>{
+    socket.broadcast.emit('receive-data',data)
+  })
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });

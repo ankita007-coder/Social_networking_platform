@@ -1,20 +1,21 @@
 import { StatusCodes } from 'http-status-codes';
 import Message from '../models/messageModel.js';
-
+import User from '../models/userModel.js';
 export const getChatMessages = async (req, res) => {
   try {
     const { userId } = req.user;
     const { friendId } = req.params;
-
+    const friend = await User.findById(friendId);
     // Retrieve chat messages between the current user and the friend
     const messages = await Message.find({
       $or: [
         { sender: userId, receiver: friendId },
         { sender: friendId, receiver: userId },
       ],
-    }).sort('createdAt');
+    })
+    .sort('createdAt');
 
-    res.status(StatusCodes.OK).json(messages);
+    res.status(StatusCodes.OK).json({friendName: friend.fullName,messages});
   } catch (error) {
     console.error('Error fetching chat messages:', error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Internal Server Error' });
@@ -36,6 +37,8 @@ export const sendChatMessage = async (req, res) => {
 
     // Save the message
     await newMessage.save();
+
+    
 
     res.status(StatusCodes.CREATED).json({ msg: 'Message sent successfully' });
   } catch (error) {

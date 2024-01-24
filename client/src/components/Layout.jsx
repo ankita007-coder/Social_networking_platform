@@ -17,7 +17,7 @@ const Layout = () => {
       <DisplayPost/>
     </main>
     <aside>
-      <AsideBox/>
+      <AsideBox />
     </aside>
     </div>
     </Wrapper>
