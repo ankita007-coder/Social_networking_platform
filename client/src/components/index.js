@@ -10,3 +10,4 @@ export {default as DisplayPost} from './DisplayPost';
 export {default as Chat} from './Chat';
 export {default as ChatModal} from './ChatModal';
 export {default as ViewProfile} from './ViewProfile';
+export {default as ShowAllFriends} from './ShowAllFriends';
