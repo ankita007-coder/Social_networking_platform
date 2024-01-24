@@ -20,6 +20,7 @@ export const displayNonFriends = async(req,res)=>{
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Internal Server Error' });
   }
 }
+
 export const addFriends = async (req, res) => {
     try {
       const { friendId } = req.body;
@@ -73,3 +74,45 @@ export const addFriends = async (req, res) => {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:"Internal Server error"})
     }
   }
+
+export const displayFriends = async(req,res)=>{
+  try {
+        const {userId} = req.user;
+        const user  = await User.findById(userId).populate('friends.accepted');
+        if(!user){
+          return res.status(StatusCodes.NOT_FOUND).json({msg:"user not found"});
+        }
+        const friends = user.friends.accepted;
+        return res.status(StatusCodes.OK).json({friends})
+    
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:error});
+  }
+}
+
+export const removeFriend = async(req,res)=>{
+  try {
+
+    const { userId } = req.user;
+    const { friendId } = req.body;
+
+    const user = await User.findById(userId);
+    user.friends.accepted = user.friends.accepted.filter(
+      (friend) => friend.toString() !== friendId
+    );
+    await user.save();
+
+    const friendUser = await User.findById(friendId);
+    friendUser.friends.accepted = friendUser.friends.accepted.filter(
+      (friend) => friend.toString() !== userId
+    );
+    await friendUser.save();
+
+    res.status(200).json({ msg: 'Friend removed successfully' });
+  } catch (error) {
+    console.error('Error removing friend:', error);
+    res.status(500).json({ msg: 'Internal Server Error' });
+  }
+}
+
+  
