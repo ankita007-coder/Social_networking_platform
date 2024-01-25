@@ -7,22 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState('');
   const [userDetails, setUserDetails] = useState(null);
 
-  useEffect(() => {
-    // Check for authentication information in localStorage
-    const storedToken = localStorage.getItem('token');
-    const storedUserDetails = localStorage.getItem('userDetails');
-  
-    if (storedToken && storedUserDetails) {
-      setIsLoggedIn(true);
-      setToken(storedToken);
-      setUserDetails(JSON.parse(storedUserDetails));
-    } else {
-      // If there's no authentication information, ensure isLoggedIn is set to false
-      setIsLoggedIn(false);
-    }
-  }, []);
-  
-
   const login = (newToken, newUserDetails) => {
     setToken(newToken);
     setUserDetails(newUserDetails);
@@ -37,11 +21,28 @@ export const AuthProvider = ({ children }) => {
     setToken('');
     setUserDetails(null);
     setIsLoggedIn(false);
-
     // Remove authentication information from localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('userDetails');
   };
+  
+  
+  useEffect(() => {
+ 
+    const storedToken = localStorage.getItem('token');
+    const storedUserDetails = localStorage.getItem('userDetails');
+  
+    if (storedToken && storedUserDetails) {
+      setIsLoggedIn(true);
+      setToken(storedToken);
+      setUserDetails(JSON.parse(storedUserDetails));
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []); 
+  
+
+
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, token, login, logout, userDetails }}>

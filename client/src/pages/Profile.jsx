@@ -147,7 +147,7 @@ const Wrapper= styled.div`
       position: absolute;
       bottom: 50%;
       left: 48%;
-      color: white;
+      color: black;
     }
     img {
       width: 100%;
@@ -178,6 +178,14 @@ const Wrapper= styled.div`
     background-color: var(--grey-900);
     width: 100%;
 
- }
+ }  
+}
+@media only screen and (max-width: 992px){
+  aside{
+    display:none;
+  }
+  main{
+    width: 100%;
+  }
 `
 export default Profile

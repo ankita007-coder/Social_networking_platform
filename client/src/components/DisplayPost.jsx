@@ -143,10 +143,7 @@ return (
                                     <div className='comments'>
                                         <FaRegComment onClick={handleComments}/>
                         
-                                    </div>
-                                    <div className='share'>
-                                        <AiOutlineShareAlt />
-                                    </div>                    
+                                    </div>                  
                                 </div>
                                {
                                 commentVisible && 

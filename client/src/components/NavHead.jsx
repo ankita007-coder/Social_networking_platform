@@ -6,6 +6,11 @@ import {NavLink} from 'react-router-dom';
 import Wrapper from '../assets/css/Navigation';
 import { useAuth } from '../utils/AuthContext';
 
+const logoutStyling = {
+  backgroundColor: 'var(--primary-400)',
+  border: '1px solid var(--primary-200)',
+  color: 'white'
+}
 const NavHead = () => {
   const {isLoggedIn,logout} = useAuth();
   return (
@@ -16,13 +21,13 @@ const NavHead = () => {
             </Nav>
             <Nav>
               {
-                isLoggedIn? <button onClick={logout}>Logout</button> :
-                <> <NavLink to='/' className='link'>
+                isLoggedIn? <button onClick={logout} style={logoutStyling}>Logout</button> :
+                <div> <NavLink to='/' className='link'>
                 Login / 
               </NavLink>
               <NavLink to='/register' className='link'>
                  Register
-              </NavLink></>
+              </NavLink></div>
               }
            
             </Nav>

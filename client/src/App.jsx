@@ -10,21 +10,18 @@ import {
   Profile,
   Register,
 } from './pages';
-import { AuthProvider, useAuth } from './utils/AuthContext';
+import { useAuth } from './utils/AuthContext';
 
 
 const App = () => {
+  const { isLoggedIn } = useAuth();
+
   const PrivateRoute = ({ element, ...props }) => {
-    const { isLoggedIn } = useAuth();
+    
     return isLoggedIn ? element : <Navigate to="/" />;
   };
   
-  // useEffect(()=>{
-  //   const token = localStorage.getItem('token');
-  //   if(token){
-  //     <Navigate to="/home"/>
-  //   }
-  // },[token]);
+
   return (
    
       <BrowserRouter>

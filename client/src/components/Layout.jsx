@@ -32,6 +32,7 @@ const Wrapper= styled.div`
   main{
     width: 65%;
     margin: 10px;
+    margin-left: 5%;
   }
   aside{
     width: 30%;
