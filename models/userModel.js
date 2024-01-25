@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
     profession: String,
     profilePic:String,
     photos:[{
-        type:String
+        photoUrl: String,
+        caption: String
     }],
     friends: {
         accepted: [{

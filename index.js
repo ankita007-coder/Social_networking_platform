@@ -13,6 +13,7 @@ import { fileURLToPath } from 'url';
 import chatRouter from './routers/chatRouter.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import photoRouter from './routers/photoRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,7 +35,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/groups', groupRouter);
 app.use('/api/v1/chat', chatRouter);
-
+app.use('/api/v1/photos',photoRouter)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const io = new Server(httpServer, {
